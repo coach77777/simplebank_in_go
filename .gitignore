@@ -1,0 +1,55 @@
+# 🔹 Binaries
+/bin/
+/build/
+/dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# 🔹 Go build files
+*.test
+*.out
+*.cover
+coverage.out
+
+# 🔹 Dependency directories (if ever used)
+vendor/
+
+# 🔹 Go workspace (rare but safe)
+go.work
+go.work.sum
+
+# 🔹 Environment files
+.env
+.env.*
+
+# 🔹 IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 🔹 OS files
+.DS_Store
+Thumbs.db
+
+# 🔹 Logs
+*.log
+
+# 🔹 Temporary files
+tmp/
+temp/
+
+# 🔹 Database / local dev files (optional)
+*.db
+*.sqlite
+
+# 🔹 sqlc generated (OPTIONAL - usually you KEEP these)
+# If you want to ignore generated code, uncomment:
+# db/sqlc/*.go
+
+# 🔹 Misc
+*.bak
+*.tmp
