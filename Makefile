@@ -7,6 +7,19 @@ postgres:
 	-e POSTGRES_PASSWORD=secret \
 	-d postgres:18-alpine
 
+
+psql:
+	docker exec -it postgres18 psql -U root -d simple_bank
+
+psqltest:
+	docker exec -it postgres18 psql -U root -d simple_bank_test
+
+countmain:
+	docker exec -it postgres18 psql -U root -d simple_bank -c "SELECT count(*) FROM accounts;"
+
+counttest:
+	docker exec -it postgres18 psql -U root -d simple_bank_test -c "SELECT count(*) FROM accounts;"
+
 createdb:
 	docker exec -it postgres18 createdb --username=root --owner=root simple_bank
 
@@ -31,6 +44,13 @@ test:
 testall:
 	go test -count=1 ./... -v
 
+testtransfer:
+	go test -count=1 -run TestTransferTx ./db/sqlc -v
+
+testtransferclean:
+	$(MAKE) cleantest
+	DB_SOURCE="$(TEST_DB_URL)" go test -count=1 -run TestTransferTx$ ./db/sqlc -v
+
 createtestdb:
 	docker exec -it postgres18 createdb --username=root --owner=root simple_bank_test
 
@@ -53,4 +73,7 @@ runtests:
 	$(MAKE) cleantest
 	$(MAKE) testdb
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc startdb test testall createtestdb droptestdb migrateup_test migratedown_test cleantest testdb runtests
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc startdb
+.PHONY: test testall testtransfer testtransferclean testdb runtests
+.PHONY: createtestdb droptestdb migrateup_test migratedown_test cleantest
+.PHONY: psql psqltest countmain counttest
